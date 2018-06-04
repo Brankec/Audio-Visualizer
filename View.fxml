@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="View" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <HBox prefHeight="78.0" prefWidth="768.0">
+         <children>
+            <Button fx:id="OpenMediaButton" mnemonicParsing="false" onAction="#OpenMediaAction" prefHeight="58.0" prefWidth="100.0" text="OPEN MEDIA">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="PlayMediaButton" mnemonicParsing="false" onAction="#PlayMediaAction" prefHeight="58.0" prefWidth="100.0" text="PLAY MEDIA">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="PauseMediaButton" mnemonicParsing="false" onAction="#PauseMediaAction" prefHeight="58.0" prefWidth="100.0" text="PAUSE MEDIA">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="StopMediaButton" mnemonicParsing="false" onAction="#StopMediaAction" prefHeight="58.0" prefWidth="100.0" text="STOP MEDIA">
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" top="5.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+      <VBox prefHeight="52.0" prefWidth="768.0">
+         <children>
+            <Text fx:id="SelectedText" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected: nothing" wrappingWidth="768.0" />
+            <Text fx:id="PlayingText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: nothing" wrappingWidth="768.0" />
+            <Text fx:id="PlaytimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playtime: nothing" wrappingWidth="768.0" />
+         </children>
+      </VBox>
+      <Pane prefHeight="322.0" prefWidth="768.0">
+         <children>
+            <Canvas fx:id="AudioVisualizerCanvas" height="322.0" width="768.0" />
+         </children>
+      </Pane>
+   </children>
+</VBox>
