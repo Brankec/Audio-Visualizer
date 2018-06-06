@@ -1,4 +1,6 @@
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -20,16 +22,15 @@ public class Controller {
     private Media audio;
     private File file;
 
-    //private Rectangle[] rect;
-    private Rectangle[] rect;
-    private Rectangle irectangle;
     private int band;
 
     public Text SelectedText, PlayingText, PlaytimeText;
-    public Canvas AudioVisualizerCanvas;
+    public Canvas canvas;
+    public Slider sliderAmplitude, sliderSize;
+    private GraphicsContext gc;
     private final FileChooser fileChooser = new FileChooser();
 
-    private int countRect = 0;
+    private int list = 0;
 
     public Controller() {
     }
@@ -43,10 +44,13 @@ public class Controller {
         }
         player = new MediaPlayer(audio);
         band = 128;
-        rect = new Rectangle[band];
-        irectangle = new Rectangle();
+        initRect();
 
         SelectedText.setText("Selected: " + file.getName());
+    }
+
+    public void initialize() {
+
     }
 
     public void PlayMediaAction() {
@@ -61,12 +65,16 @@ public class Controller {
                     PlayedTime += timestamp;
                     float[] correctedMagnitude = new float[band];
 
+                    gc.clearRect(0,0,1920/2.5, 1080/2.5);
+
                     for (int i = 0; i < band; i++) {
                         correctedMagnitude[i] = magnitudes[i] - player.getAudioSpectrumThreshold();
 
-                        initRect();
-                        drawRect(i,(i * 8), (int) (1080 / 2.5), 7, (int) (correctedMagnitude[i] * 7));
+                        //drawInHeight(i,(i * 8), (int) (1080 / 2.5), 7, (int) (correctedMagnitude[i] * 7));
+                        //drawInPosition(i,(i * 8), (int) (1080 / 2.5), 7, (int) (correctedMagnitude[i] * 7));
+                        list(i,(i * 8), (int) (1080 / 2.5), 7, (int) (correctedMagnitude[i] * 7));
                     }
+
 
                     PlaytimeText.setText("Playtime: " + PlayedTime + "s");
                 }
@@ -100,29 +108,102 @@ public class Controller {
         );
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("MP3", "*.mp3"),
-                new FileChooser.ExtensionFilter("WAV", "*.wav")
+                new FileChooser.ExtensionFilter("WAV", "*.wav") //add formats you'd like to play
         );
     }
 
-    private void drawRect(int i, int x, int y, int w, int h) {
-        float amplitude = h;
+    private void initRect() {
+        gc = canvas.getGraphicsContext2D();
+        Globals.root.getChildren().add(canvas);
+    }
+
+    public void NextButtonAction() {
+        if(list < 2) { //the number 2 is the number of different functions for displaying
+            list++;
+        }
+    }
+    public void PreviousButtonAction() {
+        if(list > 0) {
+            list--;
+        }
+    }
+
+    private void list(int i, int x, int y, int w, int h) {
+        switch(list) {
+            case 0: drawInHeight(i, x, y, w, h);
+            break;
+            case 1: drawInPosition(i, x, y, w, h);
+            break;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void drawInHeight(int i, int x, int y, int w, double h) {
+        if(sliderSize.getValue() > 0)
+            h /= sliderSize.getValue()/10;
+
+        double amplitude;
+        if(sliderAmplitude.getValue() > 0) {
+            amplitude = ((y - 145) - h * 0.1 * sliderAmplitude.getValue()/10);
+        } else {
+            amplitude = ((y - 145) - h * 0.1);
+        }
 
         DecimalFormat df = new DecimalFormat("#.00");
 
-        double bandColor = Double.parseDouble(df.format(i * 0.00782));
+        double bandColor = Double.parseDouble(df.format(i * 0.00782)); //This is a decimal I used so that when I multiply it with 128 max value is 1.00(I cut the rest)
 
-        rect[i].setFill(Color.color(1, bandColor, 0));
-        rect[i].setX(x);
-        rect[i].setWidth(w);
-        rect[i].setHeight(amplitude);
-        rect[i].setY(y - rect[i].getHeight());
+        gc.setFill(Color.color(1, bandColor, 0));
+        gc.fillRect(x, amplitude, w, h);
     }
 
-    private void initRect() {
-        if(countRect < band) {
-            rect[countRect] = new Rectangle();
-            Globals.root.getChildren().add(rect[countRect]);
-            countRect++;
+
+    private void drawInPosition(int i, int x, int y, int w, int h) {
+        double amplitude;
+        if(sliderAmplitude.getValue() > 1) {
+            amplitude = (200) - h * 0.1 * sliderAmplitude.getValue()/10;
+        } else {
+            amplitude = 200 - h * 0.1;
+        }
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        double bandColor = Double.parseDouble(df.format(i * 0.00782)); //This is a decimal I used so that when I multiply it with 128 max value is 1.00(I cut the rest)
+
+        gc.setFill(Color.color(1, bandColor, 0));
+
+        if(sliderSize.getValue() > 0) {
+            gc.fillRect(x, amplitude + i*0.1, w, 80 / sliderSize.getValue()*10);
+        } else {
+            gc.fillRect(x, amplitude + i*0.1, w, 80);
         }
     }
+
 }

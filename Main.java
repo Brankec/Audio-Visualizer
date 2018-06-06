@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    Globals global;
 
     public static void main(String[] args) {
         launch(args);
@@ -14,15 +13,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        global.primaryStage = primaryStage;
-        global.primaryStage.setTitle("Audio Visualizer");
-        global.primaryStage.setResizable(false);
+        Globals.primaryStage = primaryStage;
+        Globals.primaryStage.setTitle("Audio Visualizer");
+        Globals.primaryStage.setResizable(false);
         Group root = new Group();
-        global.root = root;
+        Globals.root = root;
         Parent fxml = FXMLLoader.load(getClass().getResource("View.fxml"));
 
-        global.root.getChildren().add(fxml);
-        global.primaryStage.setScene(new Scene(global.root, 1920/2.5, 1080/2.5));
-        global.primaryStage.show();
+        Globals.root.getChildren().add(fxml);
+        Globals.primaryStage.setScene(new Scene(Globals.root, 1920/2.5 - 9, 1080/2.5 - 9));
+        Globals.primaryStage.show();
     }
 }

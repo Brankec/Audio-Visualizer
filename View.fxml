@@ -7,39 +7,66 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="View" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox fx:id="View" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="768.0" style="-fx-background-color: #ade6c9;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <HBox prefHeight="78.0" prefWidth="768.0">
          <children>
-            <Button fx:id="OpenMediaButton" mnemonicParsing="false" onAction="#OpenMediaAction" prefHeight="58.0" prefWidth="100.0" text="OPEN MEDIA">
+            <Button fx:id="OpenMediaButton" mnemonicParsing="false" onAction="#OpenMediaAction" prefHeight="58.0" prefWidth="100.0" style="-fx-background-color: orange;" text="OPEN MEDIA">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" top="5.0" />
                </HBox.margin></Button>
-            <Button fx:id="PlayMediaButton" mnemonicParsing="false" onAction="#PlayMediaAction" prefHeight="58.0" prefWidth="100.0" text="PLAY MEDIA">
+            <Button fx:id="PlayMediaButton" mnemonicParsing="false" onAction="#PlayMediaAction" prefHeight="58.0" prefWidth="100.0" style="-fx-background-color: orange;" text="PLAY MEDIA">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" top="5.0" />
                </HBox.margin></Button>
-            <Button fx:id="PauseMediaButton" mnemonicParsing="false" onAction="#PauseMediaAction" prefHeight="58.0" prefWidth="100.0" text="PAUSE MEDIA">
+            <Button fx:id="PauseMediaButton" mnemonicParsing="false" onAction="#PauseMediaAction" prefHeight="58.0" prefWidth="100.0" style="-fx-background-color: orange;" text="PAUSE MEDIA">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" top="5.0" />
                </HBox.margin></Button>
-            <Button fx:id="StopMediaButton" mnemonicParsing="false" onAction="#StopMediaAction" prefHeight="58.0" prefWidth="100.0" text="STOP MEDIA">
+            <Button fx:id="StopMediaButton" mnemonicParsing="false" onAction="#StopMediaAction" prefHeight="58.0" prefWidth="100.0" style="-fx-background-color: orange;" text="STOP MEDIA">
                <HBox.margin>
                   <Insets left="15.0" right="15.0" top="5.0" />
                </HBox.margin></Button>
+            <Label prefHeight="77.0" prefWidth="59.0" text="Amplitude" />
+            <Slider fx:id="sliderAmplitude" prefHeight="78.0" prefWidth="71.0" />
+            <Label prefHeight="77.0" prefWidth="27.0" text="size" />
+            <Slider fx:id="sliderSize" prefHeight="78.0" prefWidth="71.0" />
          </children>
       </HBox>
-      <VBox prefHeight="52.0" prefWidth="768.0">
-         <children>
-            <Text fx:id="SelectedText" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected: nothing" wrappingWidth="768.0" />
-            <Text fx:id="PlayingText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: nothing" wrappingWidth="768.0" />
-            <Text fx:id="PlaytimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playtime: nothing" wrappingWidth="768.0" />
-         </children>
-      </VBox>
-      <Pane prefHeight="322.0" prefWidth="768.0">
-         <children>
-            <Canvas fx:id="AudioVisualizerCanvas" height="322.0" width="768.0" />
-         </children>
-      </Pane>
+      <SplitPane dividerPositions="0.6592689295039165" prefHeight="63.0" prefWidth="768.0" style="-fx-background-color: #ade6c9;">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox prefHeight="78.0" prefWidth="502.0">
+                     <children>
+                        <Text fx:id="PlaytimeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playtime: nothing" wrappingWidth="507.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="PlayingText" strokeType="OUTSIDE" strokeWidth="0.0" text="Playing: nothing" wrappingWidth="506.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="SelectedText" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected: nothing" wrappingWidth="507.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="PreviousButton" layoutX="-5.0" layoutY="-2.0" mnemonicParsing="false" onAction="#PreviousButtonAction" prefHeight="62.0" prefWidth="71.0" text="Previous" />
+                  <Button fx:id="NextButton" layoutX="187.0" layoutY="-1.0" mnemonicParsing="false" onAction="#NextButtonAction" prefHeight="62.0" prefWidth="71.0" text="Next" />
+                  <Label fx:id="SelectedVisual" layoutX="66.0" layoutY="-2.0" prefHeight="62.0" prefWidth="126.0" text="Selected: HeightBand" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+      <Canvas fx:id="canvas" height="293.0" width="769.0" />
    </children>
 </VBox>
